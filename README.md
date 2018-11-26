@@ -1,21 +1,26 @@
 Helpful commands for testing
 
-Start webapp docker container on port 1337 and with current directory mounted in container
+Build `webapp` docker container
 ```
-docker run -p1337:1337 -v `pwd`:/src/ webapp
+docker build -t webapp .
 ```
 
-Stops webapp docker container automatically
+Start `webapp` on port 1337 and with current directory mounted in container
+```
+docker run -p1337:1337 -v `pwd`/src/:/src/ webapp
+```
+
+Stops `webapp` automatically
 ```
 docker stop $( docker ps -q --filter ancestor=webapp )
 ```
 
-Copies <file> from disk to docker container
+Copies <file> from disk to `webapp`
 ```
-docker cp `pwd` $( docker ps -q --filter ancestor=webapp ):/src/
+docker cp `pwd`/src/ $( docker ps -q --filter ancestor=webapp ):/src/
 ```
 
-Enter webapp docker container shell
+Enter `webapp` shell
 ```
 docker exec -it $( docker ps -q --filter ancestor=webapp ) /bin/bash
 ```
