@@ -7,7 +7,7 @@ docker build -t webapp .
 
 Start `webapp` on port 1337 and with current directory mounted in container
 ```
-docker run -p1337:1337 -v `pwd`/src/:/src/ webapp
+docker run -p1337:1337 -v `pwd`:/src/ webapp
 ```
 
 Stops `webapp` automatically
