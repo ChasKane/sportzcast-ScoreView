@@ -1,21 +1,10 @@
 .container {
-  overflow: hidden;
-}
-
-.filterDiv {
-  float: left;
-  background-color: #2196F3;
-  color: #ffffff;
-  width: 100px;
-  line-height: 100px;
-  text-align: center;
-  margin: 2px;
-  display: none; /* Hidden by default */
+  /* overflow: hidden; */
 }
 
 /* The "show" class is added to the filtered elements */
 .show {
-  display: block;
+  /* display: block; */
 }
 
 /* Style the buttons */
