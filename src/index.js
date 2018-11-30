@@ -1,50 +1,33 @@
-const login_URL = "http://scorebot.sportzcast.net:1402/";
-const status_URL = "http://192.168.7.101:1402/";
+const URL = "http://scorebot.sportzcast.net:1402/";
+const NEXT_PAGE = "scoreView.html";
+const DEFAULT_CREDS = {
+  user:"SEC",
+  password:"CDE50A071FD29CE8EBF9813061A2DB77"
+};
 
-// function login() {
-//   $.get(
-//     login_URL,
-//     {
-//       cmd:"gt",
-//       user:"playontest1",
-//       password:"826BF2EF4A0B7D3E39B0FFC6CC5BC2C0"
-//     },
-//     function(data) {
-//       window.token = JSON.parse(data).token;
-//       window.location = "scoreView.html";
-//     }
-//   );
-// }
-
-function getStatus(franchise) {
-  window.location = "scoreView.html";
-  // $.get(
-  //   status_URL,
-  //   {
-  //     cmd:"gs",
-  //     token:"000000000000145B8D653D71A8F3",
-  //     franchise:"PlayOn Sports"
-  //   },
-  //   function(data) {
-	// 	console.log("hey");
-  //     // window.location = "scoreView.html";
-  //   }
-  // );
+function login() {
+  $.get(
+    URL,
+    {
+      cmd:"gt",
+      user:,
+      password:"CDE50A071FD29CE8EBF9813061A2DB77"
+    },
+    function(data) {
+      sessionStorage.setItem("token", JSON.parse(data).parm3);
+      sessionStorage.setItem("user", JSON.parse(data).parm4);
+      sessionStorage.setItem("franchise", JSON.parse(data).parm19);
+    }
+  );
+  $.get(
+    URL,
+    {
+      cmd:"gs",
+      token:sessionStorage.getItem("token"),
+      franchise:sessionStorage.getItem("franchise")
+    },
+    function(data) {
+      window.location = "scoreView.html";
+    }
+  );
 }
-
-var ScoreboardInfo = [];
-function receiveMessage(evt) {
-  ScoreboardInfo.push(evt.data);
-}
-window.addEventListener('message', receiveMessage);
-
-
-// ['3087','3100', '20'].forEach(function(a) {
-//   let SBRef = new Firebase('https://sportzcastdev.firebaseio.com/BOT'+a);
-//   let arr = [];
-//   SBRef.orderByValue().on("value", function(snapshot) {
-//     snapshot.forEach(function(data) {
-//       arr.push(data.key());
-//     });
-//   });
-// });
