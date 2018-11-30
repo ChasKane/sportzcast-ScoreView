@@ -46,9 +46,11 @@ function fillPage(bots) {
       affilsBots[a.affiliation].push(parseInt(a.botnum));
     }
   });
-  // display each non-empty affiliation in selection list
+  // add each non-empty affiliation to selection list, hiding them before mounting
   $.each(affilsBots, function(affil, botIDArray) {
-    $("#affilUL").append(`<li id="${affil}LIEntry" onclick="selectAffil('${affil}')">${affil}</li>`);
+    let el = $(`<li id="${affil}LIEntry" onclick="selectAffil('${affil}')">${affil}</li>`);
+    el.hide();
+    $("#affilUL").append(el);
   });
 
   // display all iframes initially
@@ -67,24 +69,27 @@ function fillPage(bots) {
 }
 
 function filterByAffil() {
-  // Declare variables
-  var input, filter, li, a, i, txtValue;
-
-  input = $("#affilUL");
-  filter = input.value.toUpperCase();
-
-  li = $("#affilUL:li");
-
+  const input = $("#affilInput");
+  const filter = input.val().toUpperCase();
+  const li = $("#affilUL").children();
   // Loop through all list items, and hide those who don't match the search query
-  li.forEach(function(index, element) {
-    if (element.innerHTML.toUpperCase().indexOf(filter) > -1) {
-      element.hide();
-    } else {
-      element.show();
-    }
-  });
+  if(filter === undefined || filter === ""){
+    li.each(function(index, element) {
+      $(element).hide();
+    });
+  } else {
+    li.each(function(index, element) {
+      if (element.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        $(element).show();
+      } else {
+        $(element).hide();
+      }
+    });
+  }
 }
 
-function selectSchool(school) {
-  alert(school);
+function selectAffil(affil) {
+  const input = $("#affilInput");
+  input.val(affil);
+  filterByAffil();
 }
