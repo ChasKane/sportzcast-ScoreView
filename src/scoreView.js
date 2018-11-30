@@ -54,18 +54,18 @@ function fillPage(bots) {
   });
 
   // display all iframes initially
-  $.each(bots, function(index, bot) {
+  // $.each(bots, function(index, bot) {
     Object.keys(affilsSites).forEach(function(affil) {
       affilsSites[affil].forEach(function(site) {
         let src = `${IFRAME_URL}SAMIFRAME_DEMO_${sessionStorage.getItem("franchise")}_${affil}_${site}_Small_IFrame/content.html`;
         $("#container").append(
-          `<div filterDiv ${Object.entries(bot)[0].map(function(pair){return pair[0] + '="' + pair[1] + '"'}).join(' ')} class="filterDiv ${Object.entries(bot)[0].map(function(pair){return pair[1]}).join(' ')}">
+          `<div filterDiv class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
             <iframe style="height:165; width:885" src="${src}" frameborder="0" scrolling="no"></iframe>
           </div>`
         );
       });
     });
-  });
+  // });${Object.entries(bot)[0].map(function(pair){return pair[1]}).join(' ')}
 }
 
 function filterByAffil() {
@@ -92,4 +92,10 @@ function selectAffil(affil) {
   const input = $("#affilInput");
   input.val(affil);
   filterByAffil();
+  $("#container").children().not("."+affil).each(function(index, element){
+    $(element).hide();
+  });
+  $("#container").children("."+affil).each(function(index, element){
+    $(element).show();
+  });
 }
