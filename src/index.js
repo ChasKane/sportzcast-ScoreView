@@ -1,4 +1,4 @@
-const URL = "http://scorebot.sportzcast.net:1402/";
+const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
 const NEXT_PAGE = "scoreView.html";
 const DEFAULT_CREDS = {
   user:"SEC",
@@ -7,7 +7,7 @@ const DEFAULT_CREDS = {
 
 function login() {
   $.get(
-    URL,
+    MAIN_URL,
     {
       cmd:"gt",
       user:$("#usernameInput").text() || DEFAULT_CREDS.user,
@@ -17,24 +17,10 @@ function login() {
       sessionStorage.setItem("token", JSON.parse(data).parm3);
       sessionStorage.setItem("user", JSON.parse(data).parm4);
       sessionStorage.setItem("franchise", JSON.parse(data).parm19);
-
-      getStatus(JSON.parse(data).parm3, JSON.parse(data).parm19);
+      sessionStorage.setItem("allowedBotIDs", JSON.parse(data).parm12);
 
       window.location = "scoreView.html";
     }
   );
 }
 
-function getStatus(token, franchise) {
-  $.get(
-    URL,
-    {
-      cmd:"gs",
-      token:token,
-      franchise:franchise
-    },
-    function(data) {
-      sessionStorage.setItem("franchise", JSON.parse(data).parm19);
-    }
-  );
-}
