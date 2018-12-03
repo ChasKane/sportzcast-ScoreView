@@ -1,4 +1,4 @@
-[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/?repository=https://github.com/ChasKane/sportzcast-ScoreView)
+[![Deploy to Azure](https://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
 
 Helpful commands for testing
 
