@@ -90,11 +90,17 @@ function filterBySite() {
   const input = $("#siteInput");
   const filter = input.val().toUpperCase();
   const li = $("#siteUL").children();
-  // Loop through all list items, and hide those who don't match the search query
+  // Loop through all list items, and hide those that don't match the search query
   if(filter === undefined || filter === ""){
-    li.each(function(index, element) {
-      $(element).hide();
-    });
+    if($(document.activeElement).is(input)) {
+      li.each(function(index, element) {
+        $(element).show();
+      });
+    } else {
+      li.each(function(index, element) {
+        $(element).hide();
+      });
+    }
   } else {
     li.each(function(index, element) {
       if (element.innerHTML.toUpperCase().indexOf(filter) > -1) {
@@ -121,11 +127,18 @@ function filterByAffil() {
   const input = $("#affilInput");
   const filter = input.val().toUpperCase();
   const li = $("#affilUL").children();
-  // Loop through all list items, and hide those who don't match the search query
+  // Loop through all list items, and hide those that don't match the search query
+  // unless the query is empty -- then show all
   if(filter === undefined || filter === ""){
-    li.each(function(index, element) {
-      $(element).hide();
-    });
+    if($(document.activeElement) === input) {
+      li.each(function(index, element) {
+        $(element).show();
+      });
+    } else {
+      li.each(function(index, element) {
+        $(element).hide();
+      });
+    }
   } else {
     li.each(function(index, element) {
       if (element.innerHTML.toUpperCase().indexOf(filter) > -1) {
@@ -136,7 +149,6 @@ function filterByAffil() {
     });
   }
 }
-
 function selectAffil(affil) {
   const input = $("#affilInput");
   input.val(affil);
@@ -145,6 +157,16 @@ function selectAffil(affil) {
     $(element).hide();
   });
   $("#container").children("."+affil).each(function(index, element){
+    $(element).show();
+  });
+}
+
+function clearFilters() {
+  $("#affilInput").val("");
+  $("#siteInput").val("");
+  filterByAffil();
+  filterBySite();
+  $("#container").children().each(function(index, element){
     $(element).show();
   });
 }
