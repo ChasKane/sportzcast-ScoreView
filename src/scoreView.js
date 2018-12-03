@@ -79,7 +79,8 @@ function fillPage(bots) {
       let src = `${IFRAME_URL}SAMIFRAME_DEMO_${sessionStorage.getItem("franchise")}_${affil}_${site}_Small_IFrame/content.html`;
       $("#container").append(
         `<div filterDiv class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
-          <iframe style="height:165; width:885" src="${src}" frameborder="0" scrolling="no"></iframe>
+          <label for="${sessionStorage.getItem("franchise")} ${affil} ${site}">${affil} ${site}</label>
+          <iframe id="${sessionStorage.getItem("franchise")} ${affil} ${site}" style="height:165; width:885" src="${src}" frameborder="0" scrolling="no"></iframe>
         </div>`
       );
     });
