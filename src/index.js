@@ -1,4 +1,4 @@
-const MAIN_URL = "https://scorebot.sportzcast.net:1402/";
+const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
 const NEXT_PAGE = "scoreView.html";
 const DEFAULT_CREDS = {
   user:"SEC",
