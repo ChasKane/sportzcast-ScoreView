@@ -1,5 +1,6 @@
 const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
 const IFRAME_URL = "http://scoreboards.sportzcast.net/Prod/";
+
 $(document).ready(function() {
   $.get(
     MAIN_URL,
@@ -20,6 +21,7 @@ function fillPage(bots) {
     bot.affiliation = bot.affiliation.replace(/ /g, "-");
     bot.site = bot.site.replace(/ /g, "-");
   });
+  // for some reason, current prototype includes an erroneous entry. Delete it
   bots = bots.filter(function(bot) {
     return !(bot.affiliation === "TBD-No-Flange");
   });
@@ -35,6 +37,23 @@ function fillPage(bots) {
     }
   });
 
+  // get bots associated with site
+  // map bots array to array of { siteString : arrayOfBotIDs }
+  let sitesBots = {};
+  bots.forEach(function(a, index) {
+    let botIDArray = sitesBots[a.site];
+    if(botIDArray === undefined || botIDArray.length === 0) {
+      sitesBots[a.site] = [ parseInt(a.botnum) ];
+    } else {
+      sitesBots[a.site].push(parseInt(a.botnum));
+    }
+  });
+  // add each non-empty site to selection list, hiding them before mounting
+  $.each(sitesBots, function(site, botIDArray) {
+    let el = $(`<li id="${site}LIEntry" onclick="selectSite('${site}')">${site}</li>`);
+    el.hide();
+    $("#siteUL").append(el);
+  });
   // get bots associated with affiliation
   // map bots array to array of { affiliationString : arrayOfBotIDs }
   let affilsBots = {};
@@ -55,17 +74,47 @@ function fillPage(bots) {
 
   // display all iframes initially
   // $.each(bots, function(index, bot) {
-    Object.keys(affilsSites).forEach(function(affil) {
-      affilsSites[affil].forEach(function(site) {
-        let src = `${IFRAME_URL}SAMIFRAME_DEMO_${sessionStorage.getItem("franchise")}_${affil}_${site}_Small_IFrame/content.html`;
-        $("#container").append(
-          `<div filterDiv class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
-            <iframe style="height:165; width:885" src="${src}" frameborder="0" scrolling="no"></iframe>
-          </div>`
-        );
-      });
+  Object.keys(affilsSites).forEach(function(affil) {
+    affilsSites[affil].forEach(function(site) {
+      let src = `${IFRAME_URL}SAMIFRAME_DEMO_${sessionStorage.getItem("franchise")}_${affil}_${site}_Small_IFrame/content.html`;
+      $("#container").append(
+        `<div filterDiv class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
+          <iframe style="height:165; width:885" src="${src}" frameborder="0" scrolling="no"></iframe>
+        </div>`
+      );
     });
-  // });${Object.entries(bot)[0].map(function(pair){return pair[1]}).join(' ')}
+  });
+}
+
+function filterBySite() {
+  const input = $("#siteInput");
+  const filter = input.val().toUpperCase();
+  const li = $("#siteUL").children();
+  // Loop through all list items, and hide those who don't match the search query
+  if(filter === undefined || filter === ""){
+    li.each(function(index, element) {
+      $(element).hide();
+    });
+  } else {
+    li.each(function(index, element) {
+      if (element.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        $(element).show();
+      } else {
+        $(element).hide();
+      }
+    });
+  }
+}
+function selectSite(site) {
+  const input = $("#siteInput");
+  input.val(site);
+  filterBySite();
+  $("#container").children().not("."+site).each(function(index, element){
+    $(element).hide();
+  });
+  $("#container").children("."+site).each(function(index, element){
+    $(element).show();
+  });
 }
 
 function filterByAffil() {
