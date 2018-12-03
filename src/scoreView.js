@@ -1,4 +1,4 @@
-const MAIN_URL = "https://scorebot.sportzcast.net:1402/";
+const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
 const IFRAME_URL = "https://scoreboards.sportzcast.net/Prod/";
 
 // Get the modal
