@@ -1,5 +1,5 @@
 const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
-const IFRAME_URL = "http://scoreboards.sportzcast.net/Prod/";
+const IFRAME_URL = "https://scoreboards.sportzcast.net/Prod/";
 
 function loadLargeScoreboard(src) {
   window.location.href=src.replace("Small", "Large")
