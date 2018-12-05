@@ -1,13 +1,8 @@
 const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
 const IFRAME_URL = "http://scoreboards.sportzcast.net/Prod/";
 
-// Get the modal
-var modal = document.getElementById('myModal');
-// When the user clicks on the button, open the modal
-function setAndOpenModal(affil, site) {
-  modal.style.display = "block";
-  $("#modalContainer").children(`.${affil}, .${site}`).show();
-  $("#modalContainer").not(`.${affil}, .${site}`).each(function(index, element) {$(element).hide()});
+function loadLargeScoreboard(src) {
+  window.location.href=src.replace("Small", "Large")
 }
 $(document).ready(function() {
   $.get(
@@ -85,40 +80,13 @@ function fillPage(bots) {
     affilsSites[affil].forEach(function(site) {
       let src = `${IFRAME_URL}SAMIFRAME_DEMO_${sessionStorage.getItem("franchise")}_${affil}_${site}_Small_IFrame/content.html`;
       $("#container").append(
-        `<div onclick="setAndOpenModal('${affil}', '${site}')" class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
+        `<div onclick="loadLargeScoreboard('${src}')" class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
           <label for="${sessionStorage.getItem("franchise")} ${affil} ${site}">${affil} ${site}</label>
           <iframe id="${sessionStorage.getItem("franchise")} ${affil} ${site}" style="height:165; width:885" src="${src}" frameborder="0" scrolling="no"></iframe>
         </div>`
       );
-      $("#modalContainer").append(
-        `<div class="filterDiv ${sessionStorage.getItem("franchise")} ${affil} ${site}">
-          <label for="${sessionStorage.getItem("franchise")} ${affil} ${site}">${affil} ${site}</label>
-          <iframe id="${sessionStorage.getItem("franchise")} ${affil} ${site}" style="height:165; width:885" src="${src.replace("Small", "Large")}" frameborder="0" scrolling="no"></iframe>
-        </div>`
-      );
     });
   });
-
-
-  // Get the button that opens the modal
-  var btn = document.getElementById("myBtn");
-
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
-
-
-  btn.onclick = () => setAndOpenModal("Georgia", "Sanford-Stadium");
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function() {
-      modal.style.display = "none";
-  }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
 }
 
 function filterBySite() {
