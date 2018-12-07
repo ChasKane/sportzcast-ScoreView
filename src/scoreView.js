@@ -4,14 +4,10 @@ const IFRAME_URL = "https://scoreboards.sportzcast.net/Prod/";
 function loadLargeScoreboard(src) {
   window.location.href=src.replace("Small", "Large")
 }
+
 $(document).ready(function() {
-  // $.get(
-    MAIN_URL,
-    {
-      cmd:"gs",
-      token:sessionStorage.getItem("token"),
-      franchise:sessionStorage.getItem("franchise")
-    },
+  $.get(
+    MAIN_URL + "getstatus.aspx", {},
     function(data) {
       fillPage(JSON.parse(data).response);
     }

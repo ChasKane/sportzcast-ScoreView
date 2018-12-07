@@ -9,7 +9,6 @@ function login() {
   $.get(
     MAIN_URL + "login.aspx",
     {
-      cmd:"gt",
       user:$("#usernameInput").text() || DEFAULT_CREDS.user,
       password:$("#passwordInput").text() || DEFAULT_CREDS.password
     },
