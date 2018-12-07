@@ -1,4 +1,4 @@
-const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
+const MAIN_URL = "http://livescore-demo.azurewebsites.net/";
 const NEXT_PAGE = "scoreView.html";
 const DEFAULT_CREDS = {
   user:"SEC",
@@ -7,7 +7,7 @@ const DEFAULT_CREDS = {
 
 function login() {
   $.get(
-    MAIN_URL,
+    MAIN_URL + "login.aspx",
     {
       cmd:"gt",
       user:$("#usernameInput").text() || DEFAULT_CREDS.user,

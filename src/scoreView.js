@@ -1,11 +1,11 @@
-const MAIN_URL = "http://scorebot.sportzcast.net:1402/";
+const MAIN_URL = "http://livescore-demo.azurewebsites.net/";
 const IFRAME_URL = "https://scoreboards.sportzcast.net/Prod/";
 
 function loadLargeScoreboard(src) {
   window.location.href=src.replace("Small", "Large")
 }
 $(document).ready(function() {
-  $.get(
+  // $.get(
     MAIN_URL,
     {
       cmd:"gs",
