@@ -6,13 +6,12 @@ const DEFAULT_CREDS = {
 };
 
 function login() {
+  let user=$("#usernameInput").text();
+  let password=$("#passwordInput").text();
   $.get(
-    MAIN_URL + "login.aspx",
-    {
-      user:$("#usernameInput").text() || DEFAULT_CREDS.user,
-      password:$("#passwordInput").text() || DEFAULT_CREDS.password
-    },
+    MAIN_URL + "login.aspx?user=" + user + "&password=" + password, {},
     function(data) {
+      console.log(data);
       sessionStorage.setItem("token", JSON.parse(data).parm3);
       sessionStorage.setItem("user", JSON.parse(data).parm4);
       sessionStorage.setItem("franchise", JSON.parse(data).parm19);
